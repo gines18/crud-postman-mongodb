@@ -1,0 +1,5 @@
+ssh -i /home/ubuntu/key.pem ubuntu@ec2-54-221-180-255.compute-1.amazonaws.com
+cd /home/ubuntu/app
+git clone <repository-url>   
+cd <repository-directory>
+git pull origin main  
