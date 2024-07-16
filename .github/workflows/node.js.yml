@@ -25,7 +25,25 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
+    - name: Cache pm2
+      id: cache-pm2
+      uses: actions/cache@v3
+      with:
+        path: ~/.npm
+        key: pm2-${{ runner.os }}-pm2
+        restore-keys: |
+          pm2-${{ runner.os }}-
+
+    - name: Install pm2 if not cached
+      run: npm install -g pm2
+      if: steps.cache-pm2.outputs.cache-hit != 'true'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: List files in repository root
+      run: ls -la
+
     - name: Pull latest changes from repository
       run: git pull
       working-directory: ./crud-postman-mongodb
