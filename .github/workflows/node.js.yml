@@ -28,4 +28,4 @@ jobs:
     - run: npm ci
     - name: Pull latest changes from repository
       run: git pull
-      working-directory: /home/ubuntu/actions-runner
+      working-directory: ./crud-postman-mongodb
