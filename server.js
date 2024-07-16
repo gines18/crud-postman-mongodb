@@ -10,11 +10,12 @@ const app = express();
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const MONGODB_URI='mongodb+srv://ruczkowskim:dKs6ItooSYP68CKw@cluster0.vxiugm8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
 //routes
 app.use("/api/products", productRoute);
 
 mongoose
-  .connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log("Connected to MongoDB");
   })
