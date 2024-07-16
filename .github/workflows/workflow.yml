@@ -17,6 +17,8 @@ jobs:
         ~ uses: gines18/crud-postman-mongodb
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          run: sudo apt-get update && sudo apt-get install -y openssh-client
+
 
       - name: Deploy via SSH
         run: |
