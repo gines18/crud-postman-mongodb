@@ -1,10 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const path = require('path');
 const Product = require("./models/product.model.js");
 const productRoute = require("./routes/product.route.js");
 require('dotenv').config();
-const bodyParser = require("body-parser");
-const path = require('path');
 
 const app = express();
 
@@ -33,7 +33,7 @@ mongoose
   const User = mongoose.model('User', userSchema);
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(_dirname, 'public', "index.html"))
+  res.sendFile(path.join(__dirname, 'public', "index.html"))
 });
 
 app.post('/submit', async (req, res) => {
