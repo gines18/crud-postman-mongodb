@@ -9,10 +9,10 @@ const app = express();
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use("/api/products", productRoute);
 
 const MONGODB_URI='mongodb+srv://ruczkowskim:dKs6ItooSYP68CKw@cluster0.vxiugm8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
-//routes
-app.use("/api/products", productRoute);
 
 mongoose
   .connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -32,7 +32,7 @@ mongoose
   const User = mongoose.model('User', userSchema);
 
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.sendFile(path.join(_dirname, 'public', "index.html"))
 });
 
 app.post('/submit', async (req, res) => {
