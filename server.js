@@ -4,6 +4,7 @@ const Product = require("./models/product.model.js");
 const productRoute = require("./routes/product.route.js");
 require('dotenv').config();
 const bodyParser = require("body-parser");
+const path = require('path');
 
 const app = express();
 
