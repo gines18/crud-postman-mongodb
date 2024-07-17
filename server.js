@@ -5,14 +5,15 @@ const path = require('path');
 const Product = require("./models/product.model.js");
 const productRoute = require("./routes/product.route.js");
 require('dotenv').config();
+const cors = require('cors');
 
 const app = express();
+app.use(cors());
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/api/products", productRoute);
-
 const MONGODB_URI='mongodb+srv://ruczkowskim:dKs6ItooSYP68CKw@cluster0.vxiugm8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
 
 mongoose
@@ -48,7 +49,5 @@ app.post('/submit', async (req, res) => {
   }
 
 })
-
-
 
 app.listen(3000);
