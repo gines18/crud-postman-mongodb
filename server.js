@@ -14,6 +14,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/api/products", productRoute);
+
 const MONGODB_URI='mongodb+srv://ruczkowskim:dKs6ItooSYP68CKw@cluster0.vxiugm8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
 
 mongoose
@@ -25,13 +26,12 @@ mongoose
     console.log("Error connecting to MongoDB", err);
   });
 
+const userSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+});
 
-  const userSchema = new mongoose.Schema({
-    name: String,
-    email: String,
-  });
-  
-  const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, 'public', "index.html"))
@@ -42,12 +42,30 @@ app.post('/submit', async (req, res) => {
     const {name, email} = req.body;
     const newUser = new User({ name, email});
     await newUser.save();
-    res.send('Success!')
+    res.status(201).send('Success!')
   } catch (error) {
-    console.error('Error saving user to MongoDB', err);
+    console.error('Error saving user to MongoDB', error);
     res.status(500).send('Error saving user to MongoDB');
   }
+})
 
+const profileSchema = new mongoose.Schema({
+  surname: String,
+  city: String,
+});
+
+const Profile = mongoose.model('Profile', profileSchema);
+
+app.post('/submitProfile', async (req, res) => {
+  try {
+    const {surname, city} = req.body;
+    const newProfile = new Profile({ surname, city});
+    await newProfile.save();
+    res.status(201).send('Success!')
+  } catch (error) {
+    console.error('Error saving profile to MongoDB', error);
+    res.status(500).send('Error saving profile to MongoDB');
+  }
 })
 
 app.listen(3000);
